@@ -118,6 +118,7 @@ def parseAirData(data: dict) -> Generator[Dict[str, Any], None, None]:
             pass
         except ValueError:
             logging.info(f"[{get_time()}] - - - - Bad temperature data in record.")
+            pass
 
         try:
             device_record['humidity'] = float(log_data['s_h0'])
