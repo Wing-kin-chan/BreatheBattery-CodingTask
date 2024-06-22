@@ -19,8 +19,8 @@ class Devices(Base):
 
     device_id: Mapped[str] = mapped_column(String(64), primary_key = True)
     project: Mapped[str] = mapped_column(String(32), nullable = False)
-    latitude: Mapped[float] = mapped_column(Float(32), nullable = False)
-    longitude: Mapped[float] = mapped_column(Float(32), nullable = False)
+    latitude: Mapped[float] = mapped_column(Float(32), nullable = True)
+    longitude: Mapped[float] = mapped_column(Float(32), nullable = True)
 
     air_data: Mapped[list["AirData"]] = relationship("AirData", 
                                                      back_populates = "Device",
