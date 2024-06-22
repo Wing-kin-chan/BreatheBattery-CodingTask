@@ -1,10 +1,15 @@
+#!/usr/bin/env python
+
 from sqlalchemy import PrimaryKeyConstraint, ForeignKey
 from sqlalchemy import String, Date, Time, Float
 from sqlalchemy import create_engine
-from sqlalchemy.orm import DeclarativeBase, sessionmaker
+from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped, registry
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
+
+import sys
+sys.path.insert(1, './')
 from config import Config
 
 mapper_registry = registry()
@@ -23,6 +28,8 @@ class Devices(Base):
     longitude: Mapped[float] = mapped_column(Float(32), nullable = True)
     altitude: Mapped[float] = mapped_column(Float(16), nullable = True)
     area: Mapped[str] = mapped_column(String(32), nullable = True)
+    sitename: Mapped[str] = mapped_column(String(64), nullable = True)
+    app_version: Mapped[str] = mapped_column(String(12), nullable = True)
 
     air_data: Mapped[list["AirData"]] = relationship("AirData", 
                                                      back_populates = "Device",
@@ -37,7 +44,7 @@ class AirData(Base):
     time: Mapped[Time] = mapped_column(Time, nullable = False)
     temperature: Mapped[float] = mapped_column(Float(16), nullable = True)
     humidity: Mapped[float] = mapped_column(Float(16), nullable = True)
-    particulate2_5: Mapped[float] = mapped_column(Float(16), nullable = True)
+    particulate2_5: Mapped[float] = mapped_column(Float(16), nullable = False)
 
     device: Mapped['Devices'] = relationship('Devices', back_populates = 'air_data')
 
