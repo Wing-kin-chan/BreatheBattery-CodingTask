@@ -63,8 +63,12 @@ def get_device_history(device_id: str) -> dict:
 
     if response.status_code == 200:
         logging.info(f"[{get_time()}] - - - - Request status: 200")
-        data = response.json()
-        return data
+        try:
+            data = response.json()
+            return data
+        except requests.exceptions.JSONDecodeError as e:
+            logging.error(f"[{get_time()}] - - - - JSON Decode error: {e}")
+            return None
     else:
         status = response.status_code
         logging.error(f"[{get_time()}] - - - - Request status: {status}")
