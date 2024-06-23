@@ -3,6 +3,7 @@
 from sqlalchemy import create_engine
 from models.db import createSession, Devices, AirData
 from scripts.utils import get_time
+from datetime import datetime
 import logging
 
 import sys
@@ -26,7 +27,8 @@ def addDevice(data: dict) -> None:
             altitude = data.get('altitude'),
             area = data.get('area'),
             sitename = data.get('sitename'),
-            app_version = data.get('app_version')
+            app_version = data.get('app_version'),
+            last_updated = datetime
         )
 
         try:
@@ -34,16 +36,13 @@ def addDevice(data: dict) -> None:
             logging.info(f"[{get_time()}] - - - - Added new device: {data['device_id']}")
         except Exception as e:
             logging.error(f"[{get_time()}] - - - - Database error: {e}")
-            session.close()
-            return None
+            session.rollback()
         try:
             session.commit()
             logging.info(f"[{get_time()}] - - - - Committing changes.")
         except Exception as e:
             logging.error(f"[{get_time()}] - - - - Database error: {e}")
-            session.close()
-            return None
-        
+            session.rollback()     
         finally:
             session.close()
             return None
@@ -67,16 +66,13 @@ def storeDeviceLog(data: dict) -> None:
             logging.info(f"[{get_time()}] - - - - Saving log: {data['time'], data['date']}")
         except Exception as e:
             logging.error(f"[{get_time()}] - - - - Database error: {e}")
-            session.close()
-            return None
+            session.rollback()
         try:
             session.commit()
             logging.info(f"[{get_time()}] - - - - Committing changes.")
         except Exception as e:
             logging.error(f"[{get_time()}] - - - - Database error: {e}")
-            session.close()
-            return None
-        
+            session.rollback()
         finally:
             session.close()
             return None
