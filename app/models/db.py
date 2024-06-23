@@ -3,14 +3,18 @@
 from sqlalchemy import PrimaryKeyConstraint, ForeignKey
 from sqlalchemy import String, Date, Time, Float
 from sqlalchemy import create_engine
-from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.orm import DeclarativeBase, sessionmaker, Session, scoped_session
 from sqlalchemy.orm import Mapped, registry
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
+from scripts.utils import get_time
+import logging
 
 import sys
 sys.path.insert(1, './')
 from config import Config
+
+logging.basicConfig(level = logging.INFO)
 
 mapper_registry = registry()
 DATABASE_URI = Config.SQLALCHEMY_DATABASE_URI
@@ -18,7 +22,6 @@ DATABASE_URI = Config.SQLALCHEMY_DATABASE_URI
 class Base(DeclarativeBase):
     pass
 
-@Mapped
 class Devices(Base):
     __tablename__ = "Devices"
 
@@ -32,10 +35,9 @@ class Devices(Base):
     app_version: Mapped[str] = mapped_column(String(12), nullable = True)
 
     air_data: Mapped[list["AirData"]] = relationship("AirData", 
-                                                     back_populates = "Device",
+                                                     back_populates = "device",
                                                      cascade = "all, delete-orphan")
 
-@Mapped 
 class AirData(Base):
     __tablename__ = "AirData"
 
@@ -54,3 +56,12 @@ class AirData(Base):
 
 engine = create_engine(DATABASE_URI, echo = True)
 Base.metadata.create_all(engine)
+
+def createSession() -> Session:
+    try:
+        Session = scoped_session(sessionmaker(bind = engine))
+        session = Session()
+        logging.info(f"[{get_time()}] - - - - Connected to database!")
+        return session
+    except Exception as e:
+        logging.error(f"[{get_time()}] - - - - Unable to connect to database: {e}")
