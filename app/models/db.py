@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from sqlalchemy import PrimaryKeyConstraint, ForeignKey
-from sqlalchemy import String, Date, Time, Float
+from sqlalchemy import String, Date, Time, Float, DateTime
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker, Session, scoped_session
 from sqlalchemy.orm import Mapped, registry
@@ -18,6 +18,7 @@ logging.basicConfig(level = logging.INFO)
 
 mapper_registry = registry()
 DATABASE_URI = Config.SQLALCHEMY_DATABASE_URI
+engine = create_engine(DATABASE_URI, echo = True)
 
 class Base(DeclarativeBase):
     pass
@@ -33,6 +34,7 @@ class Devices(Base):
     area: Mapped[str] = mapped_column(String(32), nullable = True)
     sitename: Mapped[str] = mapped_column(String(64), nullable = True)
     app_version: Mapped[str] = mapped_column(String(12), nullable = True)
+    last_updated: Mapped[DateTime] = mapped_column(DateTime, nullable = True)
 
     air_data: Mapped[list["AirData"]] = relationship("AirData", 
                                                      back_populates = "device",
@@ -54,8 +56,9 @@ class AirData(Base):
         PrimaryKeyConstraint('device_id', 'date', 'time', name = 'device_log_PK'),
     )
 
-engine = create_engine(DATABASE_URI, echo = True)
-Base.metadata.create_all(engine)
+def init_db() -> None:
+    Base.metadata.create_all(bind = engine)
+    return None
 
 def createSession() -> Session:
     try:
