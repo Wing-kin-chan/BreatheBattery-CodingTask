@@ -18,7 +18,8 @@ logging.basicConfig(level = logging.INFO)
 
 mapper_registry = registry()
 DATABASE_URI = Config.SQLALCHEMY_DATABASE_URI
-engine = create_engine(DATABASE_URI, echo = True)
+creationEngine = create_engine(DATABASE_URI, echo = True)
+queryEngine = create_engine(DATABASE_URI, echo = False)
 
 class Base(DeclarativeBase):
     pass
@@ -57,12 +58,12 @@ class AirData(Base):
     )
 
 def init_db() -> None:
-    Base.metadata.create_all(bind = engine)
+    Base.metadata.create_all(bind = creationEngine)
     return None
 
 def createSession() -> Session:
     try:
-        Session = scoped_session(sessionmaker(bind = engine))
+        Session = scoped_session(sessionmaker(bind = queryEngine))
         session = Session()
         logging.info(f"[{get_time()}] - - - - Connected to database!")
         return session
