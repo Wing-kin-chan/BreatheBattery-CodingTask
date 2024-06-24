@@ -2,15 +2,14 @@
 
 import logging
 from scripts.utils import get_time
-from typing import Generator, Dict, Any
+from typing import Generator, Dict
 
-def parseAirData(data: dict) -> Generator[Dict[str, dict], None, None]:
+def parseData(data: dict) -> Generator[Dict[str, dict], None, None]:
     """
     A generator function that yields device sensor data:
 
     - device_info:
         - device_id
-        - SiteName
         - latitude
         - longitude
         - altitude
