@@ -5,7 +5,7 @@ from scripts.utils import get_time
 
 logging.basicConfig(level = logging.INFO)
 
-def get_device_history(device_id: str) -> dict:
+def getDeviceHistory(device_id: str) -> dict:
     """
     Function to get 7 day device history from HTTP endpoint.
 
