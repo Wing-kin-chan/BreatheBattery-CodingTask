@@ -10,8 +10,8 @@
         </div>
         <Br>
         <div align = "center">
-            <form action = "/search" method = "GET">
-                <input class = "sensor-search" placeholder = "Device ID Example: 08BEAC0AB33C">
+            <form action = "{{ url_for('pages.search') }}" method = "post">
+                <input class = "sensor-search" type = "text" id = "device_id" name = "device_id" placeholder = "Device ID Example: 08BEAC0AB33C" required>
                 <button class = "submit-sensor-search">Search</button>
             </form>
         </div>
