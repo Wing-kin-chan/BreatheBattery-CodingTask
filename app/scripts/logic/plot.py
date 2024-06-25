@@ -7,13 +7,14 @@ import pandas as pd
 import plotly.express as px
 
 def dailyStatistics(data: list[AirData]) -> Figure:
-    processed_data = [(record.date, record.particulate2_5) for record in data]
-    df = pd.DataFrame(processed_data, columns = ['Date', 'PM2.5'])
+    processed_data = [(record.date, record.time, record.particulate2_5) for record in data]
+    df = pd.DataFrame(processed_data, columns = ['Date', 'Time', 'PM2.5'])
 
     fig = px.box(df,
                  x = 'Date',
                  y = 'PM2.5',
-                 title = 'Daily PM2.5 Levels')
+                 title = 'Daily PM2.5 Levels',
+                 hover_data = 'Time')
     
     return fig
 
