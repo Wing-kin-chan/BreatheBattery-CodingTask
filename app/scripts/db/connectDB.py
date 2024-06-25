@@ -147,7 +147,8 @@ def storeDeviceLog(data: dict) -> None:
 def getDeviceLastSeen(device_id: str) -> datetime|None:
     with createSession() as session:
         try:
-            result = session.query(Devices.last_updated).filter_by(device_id = device_id).one_or_none()
+            result: Devices = session.query(Devices.last_updated).filter_by(device_id = device_id).one_or_none()
+            session.close()
             if result is not None:
                 return result.last_updated
             else:
@@ -172,9 +173,41 @@ def getDeviceData(device_id: str) -> (list[AirData]|None):
                     AirData.date >= time.date()
                 )
             ).order_by(asc(AirData.date), asc(AirData.time)).all()
+            session.close()
             return data_objects
         except Exception as e:
             logging.error(f"[{get_time()}] - - - - Database error: {e}")
             session.rollback()
+        finally:
+            session.close()
+
+def getDeviceMeta(device_id: str) -> Devices:
+    """
+    Function to retrive the metadata of a device.
+
+    Parameters:
+        - device_id: str
+
+    Returns:
+        - record: Devices
+
+        with Schema:
+            - device_id
+            - project
+            - latitude
+            - longitude
+            - altitude
+            - area
+            - sitename
+            - app_version
+            - last_updated
+    """
+    with createSession() as session:
+        try:
+            record: Devices = session.query(Devices).filter_by(device_id = device_id).one_or_none()
+            session.close()
+            return record
+        except Exception as e:
+            logging.error(f"[{get_time()}] - - - - Database error: {e}")
         finally:
             session.close()
