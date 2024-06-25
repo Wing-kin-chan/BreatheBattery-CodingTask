@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from scripts.utils import get_time
-from scripts.db.fetchData import getDeviceHistory
+from scripts.db.fetchData import fetchDeviceHistory
 from scripts.db.parseData import parseData
 from scripts.db.connectDB import *
 from datetime import datetime
