@@ -22,7 +22,7 @@ Functions:
         Retrieves the logs of a device from the past 7 days.
 
 """
-from sqlalchemy import create_engine, and_
+from sqlalchemy import create_engine, and_, asc
 from models.db import createSession, Devices, AirData
 from scripts.utils import get_time
 from datetime import datetime, timedelta
@@ -158,9 +158,10 @@ def getDeviceLastSeen(device_id: str) -> datetime|None:
         finally:
             session.close()
 
-def getDeviceData(device_id: str):
+def getDeviceData(device_id: str) -> (list[AirData]|None):
     """
     Function to retrieve the last 7 days of device data from the database.
+    The results will be ordered in ascending chronological order.
     """
     time = datetime.now() - timedelta(days = 7)
     with createSession() as session:
@@ -170,7 +171,7 @@ def getDeviceData(device_id: str):
                     AirData.device_id == device_id,
                     AirData.date >= time.date()
                 )
-            ).all()
+            ).order_by(asc(AirData.date), asc(AirData.time)).all()
             return data_objects
         except Exception as e:
             logging.error(f"[{get_time()}] - - - - Database error: {e}")
