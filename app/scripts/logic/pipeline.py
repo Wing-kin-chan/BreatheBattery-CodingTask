@@ -15,7 +15,7 @@ def getNewData(device_id: str) -> None:
     """
 
     try:
-        data = getDeviceHistory(device_id)
+        data = fetchDeviceHistory(device_id)
     except Exception:
         return None
 
