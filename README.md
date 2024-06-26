@@ -19,7 +19,7 @@ reports.
 
 ## Implimentation
 
-I create a simple Flask application with a data pipeline that searches for a queried device and stores to a SQL database. Data from the last seven days is then displayed to the user through a Plotly Dash frontend. The program also generates reports as `.csv` files which the user can download.
+I created a simple Flask application with a data pipeline that searches for a queried device and stores to a SQL database. Data from the last seven days is then displayed to the user through a Plotly Dash frontend. The program also generates reports as `.csv` files which the user can download.
 
 ## How to run
 
