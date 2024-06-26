@@ -11,7 +11,7 @@ def getTimesAboveThreshold(data: list[AirData]) -> pd.DataFrame:
     for record in data:
         if record.particulate2_5 > THRESHOLD:
             date = datetime.strftime(record.date, "%Y-%m-%d")
-            time = datetime.strftime(record.time, "%H:%M:%S")
+            time = record.time.strftime("%H:%M:%S")
             danger_periods.append((date, time, record.particulate2_5))
         else:
             continue
@@ -26,6 +26,6 @@ def getDailyStatistics(data: list[AirData]) -> pd.DataFrame:
     
     df = pd.DataFrame(processed_data, columns = ['Date', 'PM2.5'])
     daily_statistics = df.groupby('Date')['PM2.5'].agg(['min', 'max', 'mean']).reset_index()
-    daily_statistics.columns = ['Date', 'Minimum PM2.5', 'Average PM2.5', 'Maximum PM2.5']
+    daily_statistics.columns = ['Date', 'Minimum PM2.5', 'Maximum PM2.5', 'Average PM2.5']
 
     return daily_statistics
