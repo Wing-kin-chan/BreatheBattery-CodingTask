@@ -31,8 +31,9 @@ Clone the git repository, create an environment and install dependencies in `req
 4. `python -m venv LASS-Viewer`
 5. `LASS-Viewer\Scripts\activate`
 6. `pip install -r requirements.txt`
-7. Run run.py `python run.py`
-8. Open browser and navigate to `http://127.0.0.1:5000`
+7. Run `activate_env.bat`
+8. Run run.py `python run.py`
+9. Open browser and navigate to `http://127.0.0.1:5000`
 
 ## Requirements
 
