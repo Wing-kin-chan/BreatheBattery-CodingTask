@@ -33,3 +33,7 @@ Clone the git repository, and create a environment and install dependencies in `
 6. `pip install -r requirements.txt`
 7. Run run.py `python run.py`
 8. Open browser and navigate to `http://127.0.0.1:5000`
+
+## Requirements
+
+This application was developed on Python 3.11.9
