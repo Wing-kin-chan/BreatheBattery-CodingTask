@@ -5,13 +5,13 @@
         <meta name = "description" content = "LASS PM2.5 Sensor Data Viewer">
     </head>
     <div class = "app-homepage">
-        <div class = "header">
+        <div class = "header" align = "center">
             <h1 class = "title">LASS PM2.5 Data Viewer</h1>
         </div>
         <Br>
         <div align = "center">
             <form action = "{{ url_for('pages.search') }}" method = "post">
-                <input class = "sensor-search" type = "text" id = "device_id" name = "device_id" placeholder = "Device ID Example: 08BEAC0AB33C" required>
+                <input class = "sensor-search" type = "text" id = "device_id" name = "device_id" placeholder = "Device ID Example: 08BEAC0AB0AE" required style = "width: 300px; height: 25px">
                 <button class = "submit-sensor-search">Search</button>
             </form>
         </div>
