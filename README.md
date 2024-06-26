@@ -31,4 +31,5 @@ Clone the git repository, and create a environment and install dependencies in `
 4. `virtualenv LASS-Viewer`
 5. `source LASS-Viewer/bin/activate`
 6. `pip install -r requirements.txt`
-7. Open browser and navigate to `http://127.0.0.1:5000`
+7. Run run.py `python run.py`
+8. Open browser and navigate to `http://127.0.0.1:5000`
