@@ -23,17 +23,17 @@ I created a simple Flask application with a data pipeline that searches for a qu
 
 ## How to run
 
-Clone the git repository, and create a environment and install dependencies in `requirements.txt` then run the `run.py` file:
+Clone the git repository, create an environment and install dependencies in `requirements.txt` then run the `run.py` file:
 
 1. `cd 'directory'`
 2. `git clone git@github.com:Wing-kin-chan/BreatheBattery-CodingTask.git`
-3. `pip install virtualenv`
-4. `virtualenv LASS-Viewer`
-5. `source LASS-Viewer/bin/activate`
+3. `cd BreatheBattery-CodingTask`
+4. `python -m venv LASS-Viewer`
+5. `LASS-Viewer\Scripts\activate`
 6. `pip install -r requirements.txt`
 7. Run run.py `python run.py`
 8. Open browser and navigate to `http://127.0.0.1:5000`
 
 ## Requirements
 
-This application was developed on Python 3.11.9
+This application was developed on Python 3.11.9. See [requirements.txt](https://github.com/Wing-kin-chan/BreatheBattery-CodingTask/blob/main/requirements.txt) for more information.
